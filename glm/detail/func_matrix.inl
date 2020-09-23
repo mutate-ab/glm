@@ -4,6 +4,12 @@
 namespace glm{
 namespace detail
 {
+#	if GLM_SILENT_WARNINGS == GLM_ENABLE
+#		if GLM_COMPILER & GLM_COMPILER_VC
+#			pragma warning(push)
+#			pragma warning(disable: 4701) // msvc erroneously warns about usage of uninitialized variables
+#		endif
+#	endif
 	template<length_t C, length_t R, typename T, qualifier Q, bool Aligned>
 	struct compute_matrixCompMult
 	{
@@ -390,6 +396,11 @@ namespace detail
 		GLM_STATIC_ASSERT(std::numeric_limits<T>::is_iec559 || GLM_CONFIG_UNRESTRICTED_GENTYPE, "'inverse' only accept floating-point inputs");
 		return detail::compute_inverse<C, R, T, Q, detail::is_aligned<Q>::value>::call(m);
 	}
+#	if GLM_SILENT_WARNINGS == GLM_ENABLE
+#		if GLM_COMPILER & GLM_COMPILER_VC
+#			pragma warning(pop)
+#		endif
+#	endif
 }//namespace glm
 
 #if GLM_CONFIG_SIMD == GLM_ENABLE
