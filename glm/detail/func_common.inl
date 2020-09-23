@@ -68,6 +68,12 @@ namespace glm
 namespace glm{
 namespace detail
 {
+#	if GLM_SILENT_WARNINGS == GLM_ENABLE
+#		if GLM_COMPILER & GLM_COMPILER_VC
+#			pragma warning(push)
+#			pragma warning(disable: 4701) // msvc erroneously warns about usage of uninitialized variables
+#		endif
+#	endif
 	template<length_t L, typename T, qualifier Q, bool Aligned>
 	struct compute_abs_vector
 	{
@@ -785,6 +791,12 @@ namespace detail
 			Result[l] = std::ldexp(v[l], exp[l]);
 		return Result;
 	}
+
+#	if GLM_SILENT_WARNINGS == GLM_ENABLE
+#		if GLM_COMPILER & GLM_COMPILER_VC
+#			pragma warning(pop)
+#		endif
+#	endif
 }//namespace glm
 
 #if GLM_CONFIG_SIMD == GLM_ENABLE
